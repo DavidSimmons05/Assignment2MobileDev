@@ -1,6 +1,7 @@
 package com.example.assignment2.utils;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,21 +43,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.title.setText(movie.getTitle());
         holder.year.setText(movie.getDate());
         //To load poster image from url
+        Drawable poster = Drawable.createFromPath(movie.getImageUrl());
+        holder.imageView.setImageDrawable(poster);
     }
 
     @Override
     public int getItemCount() {
-        if(movies != null){
-            return movies.size();
-        }
-        else{
-            return 0;
-        }
+        return movies.size();
     }
-
-    public void submitList(Object movies) {
-        this.movies = (List<Movie>) movies;
-        notifyDataSetChanged();
-    }
-
 }

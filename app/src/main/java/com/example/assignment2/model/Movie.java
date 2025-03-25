@@ -4,7 +4,6 @@ public class Movie {
     private String title;
     private String imageUrl;
     private String date;
-    private String rating;
 
     public String getTitle() {
         return title;
@@ -28,13 +27,5 @@ public class Movie {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
     }
 }
