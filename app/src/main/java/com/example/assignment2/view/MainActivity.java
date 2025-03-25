@@ -38,20 +38,26 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         listOfMovies = new ArrayList<>();
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
         movieViewModel.getMovies().observe(this, movieList ->{
-            if (movieList != null) {
+            if (movieList != null) {//check if any movie has been entered
                 // Update the list of movies in the adapter
                 listOfMovies.clear();
                 listOfMovies.addAll(movieList);
 
                 // Notify the adapter to update the RecyclerView
                 myAdapter.notifyDataSetChanged();
+            }else{
+                Toast.makeText(this, "Please enter a movie name", Toast.LENGTH_SHORT).show();
             }
         });
         //On button click
         binding.searchButton.setOnClickListener(v ->{
-            String movieQ = binding.searchMoive.getText().toString();
-            Log.i("tag",movieQ);
-            movieViewModel.searchMovies(movieQ);
+            String movieQ = binding.searchMoive.getText().toString().trim();
+            if(!movieQ.isEmpty()) {
+                movieViewModel.searchMovies(movieQ);
+            }
+            else{
+                Toast.makeText(this, "Please enter a movie name", Toast.LENGTH_SHORT).show();
+            }
         });
 
         //setup for recycler view

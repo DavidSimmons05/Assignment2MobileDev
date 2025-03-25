@@ -2,7 +2,10 @@ package com.example.assignment2.viewModel;
 
 import static android.app.ProgressDialog.show;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -27,6 +30,7 @@ import okhttp3.Response;
 
 public class MovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> movieList = new MutableLiveData<>();
+    private final MutableLiveData<String> toastMessage = new MutableLiveData<>();
     private final MutableLiveData<Movie> detailedMovie = new MutableLiveData<>();
     private List<Movie> movieData = new ArrayList<>();
     String baseUrl = "https://www.omdbapi.com/?type=movie&s=";
@@ -36,6 +40,9 @@ public class MovieViewModel extends ViewModel {
     public LiveData<List<Movie>> getMovies() {
         return movieList;
     }
+    public LiveData<String> getToastMessage(){
+        return toastMessage;
+    }
 
     public void searchMovies(String movieQ) {
         String url = baseUrl + movieQ + key;
@@ -44,31 +51,35 @@ public class MovieViewModel extends ViewModel {
         ClientApi.get(url, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                assert response.body() != null;
-                String bodyResponse = response.body().string();
-                JSONObject json = null;
+                if(response.isSuccessful()) {
+                    String bodyResponse = response.body().string();
+                    try {
+                        JSONObject json = new JSONObject(bodyResponse);
+                        if(json.has("Search")) {
+                            JSONArray searchArray = json.getJSONArray("Search");
+                            movieData.clear();  // Clear any previous results
 
-                try {
-                    json = new JSONObject(bodyResponse);
-                    JSONArray searchArray = json.getJSONArray("Search");
-                    movieData.clear();  // Clear any previous results
+                            for (int i = 0; i < searchArray.length(); i++) {
+                                JSONObject Json = searchArray.getJSONObject(i);
+                                String title = Json.getString("Title");
+                                String year = Json.getString("Year");
+                                String poster = Json.getString("Poster");
 
-                    for (int i = 0; i < searchArray.length(); i++) {
-                        JSONObject Json = searchArray.getJSONObject(i);
-                        String title = Json.getString("Title");
-                        String year = Json.getString("Year");
-                        String poster = Json.getString("Poster");
-
-                        Movie movie = new Movie();
-                        movie.setTitle(title);
-                        movie.setDate(year);
-                        movie.setImageUrl(poster);
-                        movieData.add(movie);  // Add each movie to the list
+                                Movie movie = new Movie();
+                                movie.setTitle(title);
+                                movie.setDate(year);
+                                movie.setImageUrl(poster);
+                                movieData.add(movie);  // Add each movie to the list
+                            }
+                            movieList.postValue(movieData);  // Update the LiveData with the new list of movie
+                        }
+                        else{
+                            movieList.postValue(new ArrayList<>());
+                            Log.i("MovieViewModel", "No movie found");//for debuging cehcing
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-
-                    movieList.postValue(movieData);  // Update the LiveData with the new list of movies
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
                 }
             }
 

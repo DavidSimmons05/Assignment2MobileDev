@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.assignment2.R;
 import com.example.assignment2.model.Movie;
 import com.example.assignment2.view.MyViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -45,8 +46,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.year.setText(movie.getDate());
 
         //Get poster from url
-        Drawable poster = Drawable.createFromPath(movie.getImageUrl());
-        holder.imageView.setImageDrawable(poster);
+//        Drawable poster = Drawable.createFromPath(movie.getImageUrl());
+//        holder.imageView.setImageDrawable(poster);
+        Picasso.get()
+                .load(movie.getImageUrl())//load the url from omdb
+                //.placeholder(R.drawable.placeholder) //placeholder while image is loading (souldne happen much_
+                .into(holder.imageView);
+
     }
 
     @Override
