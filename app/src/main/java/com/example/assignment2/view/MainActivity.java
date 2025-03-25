@@ -48,9 +48,14 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         });
         //On button click
         binding.searchButton.setOnClickListener(v ->{
-            String movieQ = binding.searchMoive.getText().toString();
-            Log.i("tag",movieQ);
-            movieViewModel.searchMovies(movieQ);
+            String movieQ = binding.searchMoive.getText().toString().trim();
+            if(!movieQ.isEmpty()) {
+                Log.i("tag", movieQ);
+                movieViewModel.searchMovies(movieQ);
+            }
+            else{
+                Toast.makeText(this, "Please enter a movie name", Toast.LENGTH_SHORT).show();
+            }
         });
 
         //setup for recycler view
