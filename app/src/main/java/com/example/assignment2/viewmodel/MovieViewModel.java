@@ -2,6 +2,8 @@ package com.example.assignment2.viewModel;
 
 import static android.app.ProgressDialog.show;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -21,19 +23,21 @@ import okhttp3.Response;
 
 public class MovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> movieList = new MutableLiveData<>();
-    String baseUrl= "https://www.omdbapi.com/?t";
+    String baseUrlSingle= "https://www.omdbapi.com/?t="; //t for list of movies
+    String baseUrlList = "https://www.omdbapi.com/?s=";
     String key= "&apikey=62627a90";
     public LiveData<List<Movie>> getMovies() {
         return movieList;
     }
 
     public void searchMovies(String movieQ) {
-        String url = baseUrl + movieQ + key;
+        String url = baseUrlSingle + movieQ + key;
 
         ClientApi.get(url, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                //Toast.makeText(this), "System has failed, please try again soon", Toast.LENGTH_SHORT).show();
+                Log.e("API ERROR - on failure", "failed to teche movies", e); //debugging
+                movieList.postValue(new ArrayList<>());//empty list
             }
 
             @Override

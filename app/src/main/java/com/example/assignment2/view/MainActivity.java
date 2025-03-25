@@ -1,14 +1,15 @@
 package com.example.assignment2.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.assignment2.R;
 import com.example.assignment2.databinding.ActivityMainBinding;
 import com.example.assignment2.utils.MovieClickListener;
 import com.example.assignment2.utils.MyAdapter;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        //adding moive stuff to list
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
         movieViewModel.getMovies().observe(this, movies ->{
             if(movies != null) {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
 
     @Override
     public void onClick(View v, int pos) {
+        Toast.makeText(MainActivity.this, "No movies available", Toast.LENGTH_SHORT);
 
     }
 }
