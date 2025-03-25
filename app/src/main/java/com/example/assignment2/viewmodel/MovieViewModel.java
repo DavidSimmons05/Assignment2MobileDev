@@ -27,8 +27,10 @@ import okhttp3.Response;
 
 public class MovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> movieList = new MutableLiveData<>();
+    private final MutableLiveData<Movie> detailedMovie = new MutableLiveData<>();
     private List<Movie> movieData = new ArrayList<>();
-    String baseUrl = "https://www.omdbapi.com/?s=";
+    String baseUrl = "https://www.omdbapi.com/?type=movie&s=";
+    String detailUrl = "https://www.omdbapi.com/?t=";
     String key = "&apikey=62627a90";
 
     public LiveData<List<Movie>> getMovies() {
@@ -72,7 +74,51 @@ public class MovieViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("Error", "Request failed", e);
+                Log.e("Error", "Request Failed", e);
+            }
+        });
+    }
+
+    //movie specifics
+    public void movieDetails(String name){
+        String url = detailUrl + name + key;
+        Log.i("tag",url);
+
+        ClientApi.get(url, new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
+                String bodyResponse = response.body().string();
+                JSONObject json = null;
+                try {
+                    json = new JSONObject(bodyResponse);
+                    String title = json.getString("Title");
+                    String year = json.getString("Year");
+                    String poster = json.getString("Poster");
+                    String plot = json.getString("Plot");
+                    String director = json.getString("Director");
+                    String imdbRating = json.getString("imdbRating");
+                    String genre = json.getString("Genre");
+                    String metascore = json.getString("Metascore");
+
+                    Movie movie = new Movie();
+                    movie.setTitle(title);
+                    movie.setDate(year);
+                    movie.setImageUrl(poster);
+                    movie.setPlot(plot);
+                    movie.setDirector(director);
+                    movie.setImdbRating(imdbRating);
+                    movie.setGenre(genre);
+                    movie.setMetascore(metascore);
+                    detailedMovie.postValue(movie);
+                }
+                catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e("Error","Request Failed", e);
             }
         });
     }

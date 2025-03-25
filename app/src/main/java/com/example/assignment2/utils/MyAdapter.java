@@ -53,12 +53,5 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public int getItemCount() {
         return movies.size();
     }
-
-    // Update the list of movies in the adapter when data changes
-    public void updateMovies(List<Movie> newMovies) {
-        this.movies.clear();
-        this.movies.addAll(newMovies);
-        notifyDataSetChanged();
-    }
 }
 

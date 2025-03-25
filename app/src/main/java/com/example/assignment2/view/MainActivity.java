@@ -1,5 +1,6 @@
 package com.example.assignment2.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         movieViewModel.getMovies().observe(this, movieList ->{
             if (movieList != null) {
                 // Update the list of movies in the adapter
-                listOfMovies.clear();  // Clear the old list
-                listOfMovies.addAll(movieList);  // Add the new movies to the list
+                listOfMovies.clear();
+                listOfMovies.addAll(movieList);
 
                 // Notify the adapter to update the RecyclerView
                 myAdapter.notifyDataSetChanged();
@@ -61,11 +62,12 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         binding.recyclerView.setAdapter(myAdapter);
 
         myAdapter.setClickListener(this);
-
     }
 
     @Override
     public void onClick(View v, int pos) {
-
+        String name = listOfMovies.get(pos).getTitle();
+        movieViewModel.movieDetails(name);
+        Log.i("Tag", "CLICK!");
     }
 }
