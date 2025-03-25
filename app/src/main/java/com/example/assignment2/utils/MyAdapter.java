@@ -16,8 +16,8 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    private List<Movie> movies;
-    private Context context;
+    List<Movie> movies;
+    Context context;
 
     private MovieClickListener clickListener;
     public MyAdapter(Context context, List<Movie> movies){
