@@ -42,9 +42,9 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.okhttp)
-    implementation (libs.gson)
+    implementation (libs.gson )
+    implementation(libs.picasso) //for posters
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
 }
