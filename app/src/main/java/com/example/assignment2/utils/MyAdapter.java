@@ -16,10 +16,10 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    List<Movie> movies;
-    Context context;
+    private List<Movie> movies;
+    private Context context;
 
-    public MovieClickListener clickListener;
+    private MovieClickListener clickListener;
     public MyAdapter(Context context, List<Movie> movies){
         this.context = context;
         this.movies = movies;
@@ -41,11 +41,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         Movie movie = movies.get(position);
 
         //Finish when Movie class is done
-        holder.
+        holder.title.setText(movie.getTitle());
+        holder.year.setText(movie.getDate());
+        //To load poster image from url
     }
 
     @Override
     public int getItemCount() {
         return movies.size();
     }
+
+    public void submitList(Object movies) {
+        this.movies = (List<Movie>) movies;
+        notifyDataSetChanged();
+    }
+
 }

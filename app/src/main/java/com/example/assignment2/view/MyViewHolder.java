@@ -13,10 +13,10 @@ import com.example.assignment2.utils.MovieClickListener;
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
-    MovieClickListener clickListener;
-    ImageView imageView;
-    TextView title;
-    TextView year;
+    public MovieClickListener clickListener;
+    public ImageView imageView;
+    public TextView title;
+    public TextView year;
     public MyViewHolder(@NonNull View itemView, MovieClickListener clickListener) {
         super(itemView);
 
