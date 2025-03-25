@@ -2,8 +2,6 @@ package com.example.assignment2.viewModel;
 
 import static android.app.ProgressDialog.show;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.assignment2.model.Movie;
 import com.example.assignment2.utils.ClientApi;
-import com.example.assignment2.view.MainActivity;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -24,7 +21,7 @@ import okhttp3.Response;
 
 public class MovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> movieList = new MutableLiveData<>();
-    String baseUrl= "http://www.omdbapi.com/?t";
+    String baseUrl= "https://www.omdbapi.com/?t";
     String key= "&apikey=62627a90";
     public LiveData<List<Movie>> getMovies() {
         return movieList;
