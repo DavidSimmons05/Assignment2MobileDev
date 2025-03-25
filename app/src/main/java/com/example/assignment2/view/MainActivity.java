@@ -37,7 +37,14 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         listOfMovies = new ArrayList<>();
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
         movieViewModel.getMovies().observe(this, movieList ->{
-            //this here
+            if (movieList != null) {
+                // Update the list of movies in the adapter
+                listOfMovies.clear();  // Clear the old list
+                listOfMovies.addAll(movieList);  // Add the new movies to the list
+
+                // Notify the adapter to update the RecyclerView
+                myAdapter.notifyDataSetChanged();
+            }
         });
         //On button click
         binding.searchButton.setOnClickListener(v ->{

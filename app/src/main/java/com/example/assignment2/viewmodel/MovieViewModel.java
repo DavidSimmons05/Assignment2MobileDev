@@ -26,17 +26,19 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class MovieViewModel extends ViewModel {
-    private final MutableLiveData<Movie> movieList = new MutableLiveData<>();
-    Movie movie = new Movie();
-    String baseUrl= "https://www.omdbapi.com/?s=";
-    String key= "&apikey=62627a90";
-    public LiveData<Movie> getMovies() {
+    private final MutableLiveData<List<Movie>> movieList = new MutableLiveData<>();
+    private List<Movie> movieData = new ArrayList<>();
+    String baseUrl = "https://www.omdbapi.com/?s=";
+    String key = "&apikey=62627a90";
+
+    public LiveData<List<Movie>> getMovies() {
         return movieList;
     }
 
     public void searchMovies(String movieQ) {
         String url = baseUrl + movieQ + key;
-        Log.i("tag",url);
+        Log.i("tag", url);
+
         ClientApi.get(url, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
@@ -44,35 +46,36 @@ public class MovieViewModel extends ViewModel {
                 String bodyResponse = response.body().string();
                 JSONObject json = null;
 
-                try{
+                try {
                     json = new JSONObject(bodyResponse);
                     JSONArray searchArray = json.getJSONArray("Search");
+                    movieData.clear();  // Clear any previous results
+
                     for (int i = 0; i < searchArray.length(); i++) {
                         JSONObject Json = searchArray.getJSONObject(i);
                         String title = Json.getString("Title");
                         String year = Json.getString("Year");
                         String poster = Json.getString("Poster");
+
+                        Movie movie = new Movie();
                         movie.setTitle(title);
                         movie.setDate(year);
                         movie.setImageUrl(poster);
-                        Log.i("tag",movie.getTitle());
-                        movieList.postValue(movie);
+                        movieData.add(movie);  // Add each movie to the list
                     }
-                }
-                catch (JSONException e){
+
+                    movieList.postValue(movieData);  // Update the LiveData with the new list of movies
+                } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-//                Movie movie = new Gson().fromJson(bodyResponse, Movie.class);
-//                List<Movie> movies = new ArrayList<>();
-//                movies.add(movie);
-//                Log.i("tag", movies.toString());
-//                movieList.postValue(movies);
             }
+
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                //Toast.makeText(this), "System has failed, please try again soon", Toast.LENGTH_SHORT).show();
+                Log.e("Error", "Request failed", e);
             }
         });
     }
 }
+
 
