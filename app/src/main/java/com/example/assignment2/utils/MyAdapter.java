@@ -50,7 +50,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 //        holder.imageView.setImageDrawable(poster);
         Picasso.get()
                 .load(movie.getImageUrl())//load the url from omdb
-                //.placeholder(R.drawable.placeholder) //placeholder while image is loading (souldne happen much_
                 .into(holder.imageView);
 
     }

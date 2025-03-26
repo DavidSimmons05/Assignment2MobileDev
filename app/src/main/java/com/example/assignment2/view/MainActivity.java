@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         //title.setText(.getValue().getTitle());
         Log.i("Tag", "CLICK!");
         Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-        intent.putExtra("MOVIE_TITLE", name);  // Pass the movie title to the new activity
+        intent.putExtra("MOVIE_TITLE", name);
         startActivity(intent);
     }
 }
