@@ -40,12 +40,12 @@ public class SecondActivity extends AppCompatActivity {
         movieViewModel.movieDetails(movieTitle).observe(this, movie -> {
             if (movie != null) {
                 titleTextView.setText(movie.getTitle());
-                yearTextView.setText(movie.getDate());
-                plotTextView.setText(movie.getPlot());
-                directorTextView.setText(movie.getDirector());
-                ratingTextView.setText(movie.getImdbRating());
+                yearTextView.setText("Release Year:  " + movie.getDate());
+                plotTextView.setText("--= PLOT =--  \n" + movie.getPlot());
+                directorTextView.setText("Director(s):  " + movie.getDirector());
+                ratingTextView.setText("IMDB Rating:  " + movie.getImdbRating());
                 genreTextView.setText(movie.getGenre());
-                metascoreTextView.setText(movie.getMetascore());
+                metascoreTextView.setText("Metascore:  " + movie.getMetascore());
 
                 Picasso.get().load(movie.getImageUrl()).into(posterImageView);
             } else {
