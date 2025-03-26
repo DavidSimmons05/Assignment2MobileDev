@@ -2,10 +2,7 @@ package com.example.assignment2.viewModel;
 
 import static android.app.ProgressDialog.show;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -14,7 +11,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.assignment2.model.Movie;
 import com.example.assignment2.utils.ClientApi;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,7 +87,7 @@ public class MovieViewModel extends ViewModel {
     }
 
     //movie specifics
-    public void movieDetails(String name){
+    public MutableLiveData<Movie> movieDetails(String name){
         String url = detailUrl + name + key;
         Log.i("tag",url);
 
@@ -132,6 +128,7 @@ public class MovieViewModel extends ViewModel {
                 Log.e("Error","Request Failed", e);
             }
         });
+        return detailedMovie;
     }
 }
 

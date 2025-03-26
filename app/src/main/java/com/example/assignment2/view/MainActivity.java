@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,7 +74,14 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     @Override
     public void onClick(View v, int pos) {
         String name = listOfMovies.get(pos).getTitle();
-        movieViewModel.movieDetails(name);
+        //movieViewModel.movieDetails(name);
+
+        //setContentView(R.layout.movie_details);
+        //TextView title = findViewById(R.id.movieTitle);
+        //title.setText(.getValue().getTitle());
         Log.i("Tag", "CLICK!");
+        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        intent.putExtra("MOVIE_TITLE", name);  // Pass the movie title to the new activity
+        startActivity(intent);
     }
 }
