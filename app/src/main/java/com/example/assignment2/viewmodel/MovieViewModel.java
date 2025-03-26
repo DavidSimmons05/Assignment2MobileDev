@@ -107,6 +107,7 @@ public class MovieViewModel extends ViewModel {
                     String imdbRating = json.getString("imdbRating");
                     String genre = json.getString("Genre");
                     String metascore = json.getString("Metascore");
+                    String runTime = json.getString("Runtime");
 
                     Movie movie = new Movie();
                     movie.setTitle(title);
@@ -117,6 +118,7 @@ public class MovieViewModel extends ViewModel {
                     movie.setImdbRating(imdbRating);
                     movie.setGenre(genre);
                     movie.setMetascore(metascore);
+                    movie.setRunTime(runTime);
                     detailedMovie.postValue(movie);
                 }
                 catch (JSONException e) {

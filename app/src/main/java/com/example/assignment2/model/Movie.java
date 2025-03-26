@@ -4,7 +4,7 @@ public class Movie {
     private String title;
     private String imageUrl;
     private String date;
-    private String plot, director, imdbRating, metascore, genre;
+    private String plot, director, imdbRating, metascore, genre, runTime;
 
     public String getTitle() {
         return title;
@@ -68,5 +68,13 @@ public class Movie {
 
     public void setMetascore(String metascore) {
         this.metascore = metascore;
+    }
+
+    public String getRunTime() {
+        return runTime;
+    }
+
+    public void setRunTime(String runTime) {
+        this.runTime = runTime;
     }
 }

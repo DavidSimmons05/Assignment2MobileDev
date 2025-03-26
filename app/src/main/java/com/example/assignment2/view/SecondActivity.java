@@ -16,7 +16,7 @@ public class SecondActivity extends AppCompatActivity {
 
     private MovieViewModel movieViewModel;
     //Gave up on view binding cause im tired
-    private TextView titleTextView, yearTextView, plotTextView, directorTextView, ratingTextView, genreTextView, metascoreTextView;
+    private TextView titleTextView, yearTextView, plotTextView, directorTextView, ratingTextView, genreTextView, metascoreTextView, runtimeView;
     private ImageView posterImageView;
 
     @Override
@@ -32,6 +32,8 @@ public class SecondActivity extends AppCompatActivity {
         genreTextView = findViewById(R.id.genre);
         metascoreTextView = findViewById(R.id.metascore);
         posterImageView = findViewById(R.id.poster);
+        runtimeView = findViewById(R.id.runTime);
+
 
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
@@ -46,6 +48,7 @@ public class SecondActivity extends AppCompatActivity {
                 ratingTextView.setText("IMDB Rating:  " + movie.getImdbRating());
                 genreTextView.setText(movie.getGenre());
                 metascoreTextView.setText("Metascore:  " + movie.getMetascore());
+                runtimeView.setText("Run Time:  " + movie.getRunTime());
 
                 Picasso.get().load(movie.getImageUrl()).into(posterImageView);
             } else {
@@ -56,8 +59,5 @@ public class SecondActivity extends AppCompatActivity {
             //when button is clicked, finish this activity and go back to the previous screen
             finish();
         });
-    }
-    public void onBackPressed() {
-        super.onBackPressed();  // This handles the back navigation automatically
     }
 }
