@@ -52,5 +52,12 @@ public class SecondActivity extends AppCompatActivity {
                 Toast.makeText(this, "Failed to load movie details", Toast.LENGTH_SHORT).show();
             }
         });
+        findViewById(R.id.button).setOnClickListener(v -> {
+            //when button is clicked, finish this activity and go back to the previous screen
+            finish();
+        });
+    }
+    public void onBackPressed() {
+        super.onBackPressed();  // This handles the back navigation automatically
     }
 }
